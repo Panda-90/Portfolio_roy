@@ -1,0 +1,3 @@
+@echo off
+echo Opening Scientific Calculator in default browser...
+start "" "%~dp0index.html"

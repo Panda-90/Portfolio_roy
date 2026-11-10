@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager | Clean CRUD Application</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="ri-contacts-book-2-fill"></i>
+                </div>
+                <div>
+                    <h1>Contact<span>Manager</span></h1>
+                    <p class="subtitle">FastAPI & PostgreSQL CRUD System</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <span class="status-badge connected" id="apiStatus">
+                    <span class="dot"></span> <span id="statusText">API Online</span>
+                </span>
+                <button class="btn btn-primary" id="openAddModalBtn">
+                    <i class="ri-user-add-line"></i> Add Contact
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon total"><i class="ri-group-line"></i></div>
+                <div>
+                    <span class="stat-label">Total Contacts</span>
+                    <h3 class="stat-val" id="totalCount">0</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon company"><i class="ri-building-4-line"></i></div>
+                <div>
+                    <span class="stat-label">Companies</span>
+                    <h3 class="stat-val" id="companyCount">0</h3>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon search-stat"><i class="ri-search-2-line"></i></div>
+                <div>
+                    <span class="stat-label">Showing</span>
+                    <h3 class="stat-val" id="filteredCount">0</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="toolbar">
+            <div class="search-box">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, email, phone, company..." autocomplete="off">
+                <button class="clear-search-btn" id="clearSearchBtn" title="Clear Search">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="toolbar-actions">
+                <button class="btn btn-secondary" id="refreshBtn" title="Refresh List">
+                    <i class="ri-refresh-line"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- Contacts Table / Card Grid -->
+        <main class="content-area">
+            <div class="table-container">
+                <table class="contacts-table" id="contactsTable">
+                    <thead>
+                        <tr>
+                            <th>Contact</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Company</th>
+                            <th>Address</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactsTbody">
+                        <!-- Rendered via app.js -->
+                    </tbody>
+                </table>
+
+                <!-- Loading State -->
+                <div class="state-container" id="loadingState">
+                    <div class="spinner"></div>
+                    <p>Loading contacts from database...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div class="state-container hidden" id="emptyState">
+                    <div class="empty-icon"><i class="ri-user-search-line"></i></div>
+                    <h3>No contacts found</h3>
+                    <p>Try refining your search query or add a brand new contact.</p>
+                    <button class="btn btn-primary mt-3" id="emptyAddBtn">
+                        <i class="ri-user-add-line"></i> Add New Contact
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Contact Form Modal (Create & Edit) -->
+    <div class="modal-backdrop" id="contactModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="modal-icon" id="modalIcon"><i class="ri-user-add-line"></i></div>
+                    <div>
+                        <h2 id="modalTitle">New Contact</h2>
+                        <p id="modalSubtitle">Fill in the contact information below</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeModalBtn"><i class="ri-close-line"></i></button>
+            </div>
+
+            <form id="contactForm" novalidate>
+                <input type="hidden" id="contactId" value="">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name <span class="req">*</span></label>
+                        <input type="text" id="firstName" name="first_name" placeholder="John" required maxlength="100">
+                        <span class="field-error" id="firstNameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="req">*</span></label>
+                        <input type="text" id="lastName" name="last_name" placeholder="Doe" required maxlength="100">
+                        <span class="field-error" id="lastNameError"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="req">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="john.doe@example.com" required maxlength="150">
+                        <span class="field-error" id="emailError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="req">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 234-5678" required maxlength="50">
+                        <span class="field-error" id="phoneError"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" placeholder="Acme Technologies" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address" placeholder="123 Innovation Drive, City" maxlength="255">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes / Remarks</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Key details, project context, or notes..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost" id="cancelModalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveContactBtn">
+                        <span class="btn-text">Save Contact</span>
+                        <div class="btn-spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Contact Details Modal -->
+    <div class="modal-backdrop" id="viewModal">
+        <div class="modal-card modal-view-card">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <div class="avatar-large" id="viewAvatar">JD</div>
+                    <div>
+                        <h2 id="viewFullName">John Doe</h2>
+                        <p id="viewCompanyTitle" class="company-tag">Tech Corp</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeViewModalBtn"><i class="ri-close-line"></i></button>
+            </div>
+            
+            <div class="view-body">
+                <div class="detail-item">
+                    <i class="ri-mail-line"></i>
+                    <div>
+                        <span class="detail-label">Email</span>
+                        <a href="#" id="viewEmailLink" class="detail-val link-val">-</a>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="ri-phone-line"></i>
+                    <div>
+                        <span class="detail-label">Phone</span>
+                        <a href="#" id="viewPhoneLink" class="detail-val link-val">-</a>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="ri-map-pin-line"></i>
+                    <div>
+                        <span class="detail-label">Address</span>
+                        <span id="viewAddress" class="detail-val">-</span>
+                    </div>
+                </div>
+                <div class="detail-item full-width" id="notesDetailContainer">
+                    <i class="ri-sticky-note-line"></i>
+                    <div>
+                        <span class="detail-label">Notes</span>
+                        <p id="viewNotes" class="detail-val notes-box">-</p>
+                    </div>
+                </div>
+                <div class="detail-item meta-item">
+                    <i class="ri-calendar-line"></i>
+                    <div>
+                        <span class="detail-label">Created At</span>
+                        <span id="viewCreatedAt" class="detail-val text-muted">-</span>
+                    </div>
+                </div>
+                <div class="detail-item meta-item">
+                    <i class="ri-history-line"></i>
+                    <div>
+                        <span class="detail-label">Last Updated</span>
+                        <span id="viewUpdatedAt" class="detail-val text-muted">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger-ghost" id="viewDeleteBtn">
+                    <i class="ri-delete-bin-line"></i> Delete
+                </button>
+                <button type="button" class="btn btn-secondary" id="viewEditBtn">
+                    <i class="ri-edit-line"></i> Edit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-backdrop" id="deleteModal">
+        <div class="modal-card modal-delete-card">
+            <div class="delete-warning-icon">
+                <i class="ri-error-warning-fill"></i>
+            </div>
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete <strong id="deleteContactName">this contact</strong>? This action cannot be undone.</p>
+            <div class="modal-footer justify-center">
+                <button type="button" class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="ri-delete-bin-6-line"></i> Delete Contact
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>

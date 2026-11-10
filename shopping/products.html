@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products — Bazaaro</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .products-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+  }
+  .sidebar {
+    background: var(--white);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    height: fit-content;
+  }
+  .sidebar h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: var(--teal-dark);
+  }
+  .filter-group {
+    margin-bottom: 25px;
+  }
+  .filter-group label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  .filter-group input[type="radio"] {
+    margin-right: 8px;
+    accent-color: var(--teal);
+  }
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .sort-select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: var(--gray);
+  }
+  @media (max-width: 900px) {
+    .products-layout { grid-template-columns: 1fr; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="logo">Bazaar<span>o</span></a>
+    <form class="search-bar" id="search-form">
+      <input type="text" id="search-input" placeholder="Search for products, brands and more">
+      <button type="submit">Search</button>
+    </form>
+    <div class="header-actions">
+      <a href="products.html">All Products</a>
+      <a href="cart.html">🛒 Cart <span class="cart-count" id="cart-count">0</span></a>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <ul id="nav-categories"></ul>
+  </nav>
+</header>
+
+<main class="container products-layout">
+  
+  <aside class="sidebar">
+    <h3>Filters</h3>
+    <div class="filter-group">
+      <h4>Categories</h4>
+      <div id="category-filters" style="margin-top:10px;">
+        <label><input type="radio" name="category" value="All" checked> All Categories</label>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="products-header">
+      <h2 id="results-count">Showing all products</h2>
+      <select class="sort-select" id="sort-select">
+        <option value="default">Sort by: Recommended</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating-high">Rating: High to Low</option>
+      </select>
+    </div>
+    
+    <div class="product-grid" id="all-products-grid">
+      <!-- Products injected here -->
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>Bazaaro</h4>
+      <ul><li>About Us</li><li>Careers</li><li>Press</li></ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul><li>Payments</li><li>Shipping</li><li>Returns</li></ul>
+    </div>
+    <div>
+      <h4>Policy</h4>
+      <ul><li>Return Policy</li><li>Terms of Use</li><li>Privacy</li></ul>
+    </div>
+    <div>
+      <h4>Social</h4>
+      <ul><li>Facebook</li><li>Instagram</li><li>Twitter</li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Bazaaro. All rights reserved. (Demo project — not a real store)</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="cart.js"></script>
+<script>
+  // Setup Nav
+  const navUl = document.getElementById("nav-categories");
+  CATEGORIES.forEach(cat => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="products.html?category=${encodeURIComponent(cat)}">${cat}</a>`;
+    navUl.appendChild(li);
+  });
+
+  // Setup Sidebar Filters
+  const filterWrap = document.getElementById("category-filters");
+  CATEGORIES.forEach(cat => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="radio" name="category" value="${cat}"> ${cat}`;
+    filterWrap.appendChild(label);
+  });
+
+  // Main Logic
+  const grid = document.getElementById("all-products-grid");
+  const searchInput = document.getElementById("search-input");
+  const searchForm = document.getElementById("search-form");
+  const sortSelect = document.getElementById("sort-select");
+  const radios = document.querySelectorAll('input[name="category"]');
+  const resultsCount = document.getElementById("results-count");
+
+  let currentProducts = [...PRODUCTS];
+
+  function renderProducts() {
+    grid.innerHTML = "";
+    
+    if (currentProducts.length === 0) {
+      grid.innerHTML = `<div class="no-results">No products found matching your criteria.</div>`;
+      resultsCount.textContent = \`0 results found\`;
+      return;
+    }
+
+    resultsCount.textContent = \`Showing \${currentProducts.length} product(s)\`;
+
+    currentProducts.forEach(p => {
+      const off = discountPercent(p.price, p.mrp);
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = \`
+        <a href="product-detail.html?id=\${p.id}">
+          <img src="\${p.image}" alt="\${p.name}">
+        </a>
+        <div class="product-info">
+          <h3><a href="product-detail.html?id=\${p.id}">\${p.name}</a></h3>
+          <span class="rating-pill">★ \${p.rating}</span>
+          <div class="price-row">
+            <span class="price-now">\${formatPrice(p.price)}</span>
+            <span class="price-mrp">\${formatPrice(p.mrp)}</span>
+            <span class="price-off">\${off}% off</span>
+          </div>
+          <button class="add-btn" onclick="addToCart(\${p.id}); this.textContent='Added ✓'; setTimeout(()=>this.textContent='Add to Cart', 1200);">Add to Cart</button>
+        </div>\`;
+      grid.appendChild(card);
+    });
+  }
+
+  function applyFilters() {
+    const query = searchInput.value.toLowerCase();
+    const selectedCat = document.querySelector('input[name="category"]:checked').value;
+    const sort = sortSelect.value;
+
+    // Filter
+    currentProducts = PRODUCTS.filter(p => {
+      const matchQuery = p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query);
+      const matchCat = selectedCat === "All" || p.category === selectedCat;
+      return matchQuery && matchCat;
+    });
+
+    // Sort
+    if (sort === "price-low") {
+      currentProducts.sort((a, b) => a.price - b.price);
+    } else if (sort === "price-high") {
+      currentProducts.sort((a, b) => b.price - a.price);
+    } else if (sort === "rating-high") {
+      currentProducts.sort((a, b) => b.rating - a.rating);
+    }
+
+    renderProducts();
+  }
+
+  // Event Listeners
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    applyFilters();
+  });
+
+  searchInput.addEventListener("input", applyFilters);
+  sortSelect.addEventListener("change", applyFilters);
+  
+  radios.forEach(radio => {
+    radio.addEventListener("change", applyFilters);
+  });
+
+  // Handle URL Params on load
+  const urlParams = new URLSearchParams(window.location.search);
+  const qParam = urlParams.get('q');
+  const catParam = urlParams.get('category');
+
+  if (qParam) {
+    searchInput.value = qParam;
+  }
+  if (catParam && CATEGORIES.includes(catParam)) {
+    const targetRadio = document.querySelector(\`input[name="category"][value="\${catParam}"]\`);
+    if(targetRadio) targetRadio.checked = true;
+  }
+
+  // Initial render
+  applyFilters();
+
+</script>
+</body>
+</html>

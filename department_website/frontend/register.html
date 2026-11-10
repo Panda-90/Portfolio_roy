@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration - CS Department</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            CS Department
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="register.html">Registration</a>
+            <a href="login.html">Login</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Registration Section -->
+    <section class="register-section">
+
+        <div class="register-card">
+
+            <h1>Student Registration</h1>
+
+            <p>
+                Create your department account
+            </p>
+
+            <form id="registerForm">
+
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+
+                    <input type="text" id="full_name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course-select">Course</label>
+                    <select id="course-select" name="courses" class="form-control">
+                        <option value="cs">Introduction to Computer Science</option>
+                        <option value="web">Web Development Basics</option>
+                        <option value="data">Data Science Fundamentals</option>
+                        <option value="marketing">Digital Marketing 101</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+
+
+                <button type="submit" class="btn register-btn">
+                    Register
+                </button>
+
+            </form>
+
+
+            <p id="message"></p>
+
+            <p class="login-link">
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        <p>© 2026 Computer Science Department</p>
+    </footer>
+
+
+    <script src="js/register.js"></script>
+
+</body>
+
+</html>

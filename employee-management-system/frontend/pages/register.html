@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Registration</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Auth Script -->
+    <script src="../js/auth.js"></script>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <i class="fa-solid fa-users"></i>
+
+                <div>
+                    <h2>Employee</h2>
+                    <h2>Management</h2>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="../index.html" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="register.html" class="nav-item active">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Employee Registration</span>
+                </a>
+
+                <a href="employee.html" class="nav-item">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Show Employees</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+                <a href="#" class="nav-item" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN ================= -->
+
+        <main class="main">
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div></div>
+
+                <div class="topbar-right">
+
+                    <i class="fa-regular fa-bell notification"></i>
+
+                    <div class="admin">
+
+                        <div class="admin-avatar">
+                            A
+                        </div>
+
+                        <span>Admin</span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= CONTENT ================= -->
+
+            <section class="content">
+
+                <!-- PAGE HEADING -->
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <h1>Employee Registration</h1>
+
+                        <p>
+                            Fill in the details to register a new employee.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= FORM CARD ================= -->
+
+                <div class="registration-card">
+
+                    <form id="employeeForm">
+
+                        <div class="form-grid">
+
+                            <!-- FULL NAME -->
+
+                            <div class="form-group">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-user"></i>
+
+                                    <input type="text" id="fullName" name="fullName" placeholder="Enter full name">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- EMPLOYEE ID -->
+
+                            <div class="form-group">
+
+                                <label for="employeeId">
+                                    Employee ID
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-id-card"></i>
+
+                                    <input type="text" id="employeeId" name="employeeId"
+                                        placeholder="Enter employee ID">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="form-group">
+
+                                <label for="email">
+                                    Email
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-envelope"></i>
+
+                                    <input type="email" id="email" name="email" placeholder="Enter email address">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="form-group">
+
+                                <label for="phone">
+                                    Phone
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-solid fa-phone"></i>
+
+                                    <input type="tel" id="phone" name="phone" placeholder="Enter phone number">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- DEPARTMENT -->
+
+                            <div class="form-group">
+
+                                <label for="department">
+                                    Department
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-building"></i>
+
+                                    <select id="department" name="department">
+
+                                        <option value="">
+                                            Select department
+                                        </option>
+
+                                        <option value="IT">
+                                            IT
+                                        </option>
+
+                                        <option value="HR">
+                                            HR
+                                        </option>
+
+                                        <option value="Finance">
+                                            Finance
+                                        </option>
+
+                                        <option value="Marketing">
+                                            Marketing
+                                        </option>
+
+                                    </select>
+
+                                    <i class="fa-solid fa-chevron-down select-arrow"></i>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- POSITION -->
+
+                            <div class="form-group">
+
+                                <label for="position">
+                                    Position
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-briefcase"></i>
+
+                                    <input type="text" id="position" name="position" placeholder="Enter position">
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- JOINING DATE -->
+
+                            <div class="form-group">
+
+                                <label for="joiningDate">
+                                    Joining Date
+                                </label>
+
+                                <div class="input-box">
+
+                                    <i class="fa-regular fa-calendar"></i>
+
+                                    <input type="date" id="joiningDate" name="joiningDate">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REGISTER BUTTON -->
+
+                        <button type="submit" class="register-btn">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            Register Employee
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Toast Notification Container for AJAX Feedback -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="../js/register.js"></script>
+
+</body>
+
+</html>

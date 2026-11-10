@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Company Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="nav-brand">🏢 ApexCorp Portal</a>
+    <div class="nav-links">
+      <span id="navUserName" style="font-weight: 600; color: var(--secondary);"></span>
+      <button onclick="logout()" class="btn btn-danger">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Admin Header -->
+    <div class="dashboard-header">
+      <div class="user-info">
+        <h2>Welcome, <span id="profileName">Administrator</span>!</h2>
+        <p style="color: var(--text-muted);">Executive Administrator Workspace</p>
+      </div>
+      <div>
+        <span class="badge badge-admin">Administrator</span>
+      </div>
+    </div>
+
+    <!-- Own Details Section -->
+    <section class="card">
+      <h3 class="card-title">👤 My Admin Profile</h3>
+      <div class="profile-grid">
+        <div class="profile-field">
+          <div class="label">Full Name</div>
+          <div class="value" id="detailName">-</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Email Address</div>
+          <div class="value" id="detailEmail">-</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Role</div>
+          <div class="value" id="detailRole">Admin</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Phone</div>
+          <div class="value" id="detailPhone">-</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Department</div>
+          <div class="value" id="detailDepartment">-</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Position</div>
+          <div class="value" id="detailPosition">-</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Employees Details Section (PRD: Admin can view all Employee details) -->
+    <section class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+        <div>
+          <h3 class="card-title" style="margin-bottom: 0.2rem;">👥 All Employee Directory</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Full roster of registered company employees and their operational positions.
+          </p>
+        </div>
+        <div>
+          <input type="text" id="employeeSearch" placeholder="Search employees..." style="padding: 0.5rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius); width: 220px; outline: none;">
+        </div>
+      </div>
+
+      <div id="employeeLoading" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+        Loading employee roster...
+      </div>
+
+      <div class="table-container" id="employeeTableContainer" style="display: none;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Department</th>
+              <th>Position</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody id="employeeTableBody">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 ApexCorp Management System — College Lab Project</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

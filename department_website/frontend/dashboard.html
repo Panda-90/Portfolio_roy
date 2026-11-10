@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - CS Department</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CS Department
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+
+            <button id="logoutBtn" class="logout-btn">
+                Logout
+            </button>
+        </div>
+
+    </nav>
+
+
+    <main class="dashboard-section">
+
+        <div class="dashboard-container">
+
+            <div class="welcome-card">
+
+                <h1>
+                    Welcome, <span id="userName"></span>!
+                </h1>
+
+                <p>
+                    Welcome to your Computer Science Department portal.
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h2>My Profile</h2>
+
+                <div class="user-info">
+
+                    <div class="info-item">
+                        <strong>Full Name</strong>
+                        <span id="userFullName"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Course</strong>
+                        <span id="userCourse"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Email</strong>
+                        <span id="userEmail"></span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Phone</strong>
+                        <span id="userPhone"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <h2>Quick Actions</h2>
+
+                <div class="dashboard-actions">
+
+                    <a href="about.html" class="btn">
+                        Department Information
+                    </a>
+
+                    <button id="logoutBtn2" class="btn logout-action">
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 Computer Science Department
+        </p>
+
+    </footer>
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

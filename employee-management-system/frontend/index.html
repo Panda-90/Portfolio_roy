@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Auth Script -->
+    <script src="js/auth.js"></script>
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <i class="fa-solid fa-users"></i>
+
+                <div>
+                    <h2>Employee</h2>
+                    <h2>Management</h2>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="index.html" class="nav-item active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="pages/register.html" class="nav-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Employee Registration</span>
+                </a>
+
+                <a href="pages/employee.html" class="nav-item">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Show Employees</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+                <a href="#" class="nav-item" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN ================= -->
+        <main class="main">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div></div>
+
+                <div class="topbar-right">
+
+                    <i class="fa-regular fa-bell notification"></i>
+
+                    <div class="admin" id="adminMenuBtn">
+                        <div class="admin-avatar">A</div>
+
+                        <span>Admin</span>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                        <!-- DROPDOWN -->
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
+                            <a href="#"><i class="fa-solid fa-gear"></i> Settings</a>
+                            <a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- CONTENT -->
+            <section class="content">
+
+                <!-- TITLE -->
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p>Welcome back, Admin! Here's a quick overview.</p>
+                    </div>
+
+                    <div class="date-box">
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <div>
+                            <span>Today</span>
+                            <strong id="currentDate">Sunday, 7 September 2025</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- ================= STAT CARDS ================= -->
+
+                <div class="stats-grid">
+
+                    <!-- TOTAL -->
+                    <div class="stat-card blue">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div>
+                            <p>Total Employees</p>
+                            <h2 id="totalEmployees">5</h2>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIVE -->
+                    <div class="stat-card green">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+
+                        <div>
+                            <p>Active Employees</p>
+                            <h2 id="activeEmployees">4</h2>
+                        </div>
+
+                    </div>
+
+
+                    <!-- NEW -->
+                    <div class="stat-card yellow">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-user-clock"></i>
+                        </div>
+
+                        <div>
+                            <p>New This Month</p>
+                            <h2 id="newEmployees">2</h2>
+                        </div>
+
+                    </div>
+
+
+                    <!-- INACTIVE -->
+                    <div class="stat-card red">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </div>
+
+                        <div>
+                            <p>Inactive Employees</p>
+                            <h2 id="inactiveEmployees">1</h2>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= LOWER SECTION ================= -->
+
+                <div class="dashboard-grid">
+
+                    <!-- DEPARTMENT -->
+                    <div class="dashboard-card">
+
+                        <h3>Employees by Department</h3>
+
+                        <div class="department-content">
+
+                            <div class="donut">
+
+                                <div class="donut-center">
+                                    <strong id="donutTotal">5</strong>
+                                    <span>Employees</span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="department-list" id="departmentList">
+
+                                <div>
+                                    <span class="dot blue-dot"></span>
+                                    <span>IT</span>
+                                    <strong>2</strong>
+                                </div>
+
+                                <div>
+                                    <span class="dot green-dot"></span>
+                                    <span>HR</span>
+                                    <strong>1</strong>
+                                </div>
+
+                                <div>
+                                    <span class="dot yellow-dot"></span>
+                                    <span>Finance</span>
+                                    <strong>1</strong>
+                                </div>
+
+                                <div>
+                                    <span class="dot purple-dot"></span>
+                                    <span>Marketing</span>
+                                    <strong>1</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT REGISTRATIONS -->
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+                            <h3>Recent Registrations</h3>
+                            <a href="pages/employee.html">View All</a>
+                        </div>
+
+
+                        <div class="recent-list" id="recentList">
+
+                            <div class="recent-item">
+
+                                <div class="employee-avatar blue-avatar">R</div>
+
+                                <strong>Rahul Sharma</strong>
+
+                                <span>IT</span>
+
+                                <small>12 Jan 2024</small>
+
+                            </div>
+
+
+                            <div class="recent-item">
+
+                                <div class="employee-avatar red-avatar">P</div>
+
+                                <strong>Priya Verma</strong>
+
+                                <span>HR</span>
+
+                                <small>03 Feb 2024</small>
+
+                            </div>
+
+
+                            <div class="recent-item">
+
+                                <div class="employee-avatar green-avatar">A</div>
+
+                                <strong>Amit Kumar</strong>
+
+                                <span>Finance</span>
+
+                                <small>15 Mar 2024</small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Script -->
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Company Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="nav-brand">🏢 ApexCorp Portal</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="login.html" class="btn btn-secondary">Login</a>
+    </nav>
+  </header>
+
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 580px;">
+      <h2>Create an Account</h2>
+      <p class="subtitle">Join ApexCorp Employee & Admin Management System</p>
+
+      <div id="alertBox" class="alert"></div>
+
+      <form id="registerForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" required placeholder="john@company.com">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" required placeholder="Min 6 characters">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+1 234 567 890">
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="department">Department</label>
+            <input type="text" id="department" placeholder="e.g. Engineering, HR">
+          </div>
+          <div class="form-group">
+            <label for="position">Job Position</label>
+            <input type="text" id="position" placeholder="e.g. Software Engineer">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="role">Role *</label>
+          <select id="role" required>
+            <option value="Employee" selected>Employee</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Register Account
+        </button>
+      </form>
+
+      <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+        Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 600; text-decoration: none;">Sign in here</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

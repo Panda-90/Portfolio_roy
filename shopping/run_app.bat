@@ -1,0 +1,3 @@
+@echo off
+echo Opening Shopping App in default browser...
+start "" "%~dp0index.html"

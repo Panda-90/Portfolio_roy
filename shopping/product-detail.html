@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Detail — Bazaaro</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+  .product-gallery img {
+    width: 100%;
+    border-radius: var(--radius);
+    object-fit: cover;
+    box-shadow: var(--shadow);
+  }
+  .detail-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .detail-category {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .detail-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .detail-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--success);
+    color: var(--white);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .detail-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .detail-price-now { font-size: 28px; font-weight: 800; color: var(--teal-dark); }
+  .detail-price-mrp { font-size: 18px; color: var(--gray); text-decoration: line-through; }
+  .detail-price-off { font-size: 16px; color: var(--success); font-weight: 700; }
+  
+  .detail-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-light);
+    margin-bottom: 30px;
+  }
+  
+  .add-to-cart-section {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+  }
+  
+  .qty-input {
+    width: 70px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .add-cart-btn {
+    flex: 1;
+    background: var(--marigold);
+    color: var(--teal-dark);
+    font-weight: 800;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  
+  .add-cart-btn:hover { background: var(--marigold-dark); }
+  .add-cart-btn:active { transform: scale(0.98); }
+
+  .not-found {
+    text-align: center;
+    padding: 100px 20px;
+    grid-column: 1 / -1;
+  }
+  
+  /* Toast Notification */
+  #toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #toast.show {
+    bottom: 40px;
+  }
+
+  @media (max-width: 800px) {
+    .detail-layout { grid-template-columns: 1fr; gap: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="logo">Bazaar<span>o</span></a>
+    <form class="search-bar" onsubmit="event.preventDefault(); window.location.href='products.html?q='+encodeURIComponent(this.q.value);">
+      <input type="text" name="q" placeholder="Search for products, brands and more">
+      <button type="submit">Search</button>
+    </form>
+    <div class="header-actions">
+      <a href="products.html">All Products</a>
+      <a href="cart.html">🛒 Cart <span class="cart-count" id="cart-count">0</span></a>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <ul id="nav-categories"></ul>
+  </nav>
+</header>
+
+<main class="container detail-layout" id="product-container">
+  <!-- Content injected here -->
+</main>
+
+<div id="toast">✅ Item added to your cart successfully!</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h4>Bazaaro</h4>
+      <ul><li>About Us</li><li>Careers</li><li>Press</li></ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul><li>Payments</li><li>Shipping</li><li>Returns</li></ul>
+    </div>
+    <div>
+      <h4>Policy</h4>
+      <ul><li>Return Policy</li><li>Terms of Use</li><li>Privacy</li></ul>
+    </div>
+    <div>
+      <h4>Social</h4>
+      <ul><li>Facebook</li><li>Instagram</li><li>Twitter</li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Bazaaro. All rights reserved. (Demo project — not a real store)</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="cart.js"></script>
+<script>
+  // Setup Nav
+  const navUl = document.getElementById("nav-categories");
+  CATEGORIES.forEach(cat => {
+    const li = document.createElement("li");
+    li.innerHTML = `<a href="products.html?category=${encodeURIComponent(cat)}">${cat}</a>`;
+    navUl.appendChild(li);
+  });
+
+  const container = document.getElementById("product-container");
+  
+  // Get ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
+  const product = getProductById(productId);
+
+  if (!product) {
+    container.innerHTML = `
+      <div class="not-found">
+        <h2>Product Not Found 😕</h2>
+        <p style="margin:10px 0 20px;">The product you are looking for does not exist.</p>
+        <a href="products.html" style="color:var(--teal); font-weight:700;">← Back to Products</a>
+      </div>
+    `;
+  } else {
+    const off = discountPercent(product.price, product.mrp);
+    
+    container.innerHTML = `
+      <div class="product-gallery">
+        <img src="${product.image.replace('400/400', '600/600')}" alt="${product.name}">
+      </div>
+      <div class="detail-info">
+        <div class="detail-category">${product.category}</div>
+        <h1 class="detail-title">${product.name}</h1>
+        <div class="detail-rating">★ ${product.rating}</div>
+        
+        <div class="detail-price-row">
+          <span class="detail-price-now">${formatPrice(product.price)}</span>
+          <span class="detail-price-mrp">${formatPrice(product.mrp)}</span>
+          <span class="detail-price-off">${off}% off</span>
+        </div>
+        
+        <div class="detail-desc">
+          <p><strong>About this item:</strong></p>
+          <p>${product.desc}</p>
+        </div>
+        
+        <div class="add-to-cart-section">
+          <input type="number" id="qty-input" class="qty-input" value="1" min="1" max="10">
+          <button class="add-cart-btn" onclick="handleAddToCart(${product.id})">Add to Cart 🛒</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function handleAddToCart(id) {
+    const qtyInput = document.getElementById("qty-input");
+    const qty = parseInt(qtyInput.value) || 1;
+    
+    // Call cart.js function
+    addToCart(id, qty);
+    
+    showToast();
+  }
+
+  function showToast() {
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+
+</script>
+</body>
+</html>

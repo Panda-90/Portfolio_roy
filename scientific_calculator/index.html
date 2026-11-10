@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator | Premium Web App</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- History Sidebar -->
+        <aside class="history-panel" id="historyPanel">
+            <div class="history-header">
+                <h2>History</h2>
+                <button class="icon-btn" id="clearHistoryBtn" title="Clear History">
+                    <i class="ri-delete-bin-line"></i>
+                </button>
+            </div>
+            <div class="history-list" id="historyList">
+                <!-- History items will appear here -->
+                <div class="empty-history">No history yet</div>
+            </div>
+        </aside>
+
+        <!-- Calculator Main Area -->
+        <main class="calculator">
+            <div class="calculator-header">
+                <button class="icon-btn" id="toggleHistoryBtn" title="Toggle History">
+                    <i class="ri-history-line"></i>
+                </button>
+                <div class="brand">
+                    <span>SciCalc</span> Pro
+                </div>
+                <button class="icon-btn" id="themeToggleBtn" title="Toggle Theme">
+                    <i class="ri-sun-line"></i>
+                </button>
+            </div>
+
+            <!-- Display Area -->
+            <div class="display">
+                <div class="expression" id="expression"></div>
+                <div class="result" id="result">0</div>
+            </div>
+
+            <!-- Keypad Area -->
+            <div class="keypad">
+                <!-- Scientific Operators -->
+                <div class="sci-keys">
+                    <button class="btn btn-sci" data-action="func" data-value="sin(">sin</button>
+                    <button class="btn btn-sci" data-action="func" data-value="cos(">cos</button>
+                    <button class="btn btn-sci" data-action="func" data-value="tan(">tan</button>
+                    <button class="btn btn-sci" data-action="func" data-value="log(">log</button>
+                    <button class="btn btn-sci" data-action="func" data-value="ln(">ln</button>
+
+                    <button class="btn btn-sci" data-action="func" data-value="sqrt(">√</button>
+                    <button class="btn btn-sci" data-action="input" data-value="^">xʸ</button>
+                    <button class="btn btn-sci" data-action="input" data-value="^2">x²</button>
+                    <button class="btn btn-sci" data-action="input" data-value="π">π</button>
+                    <button class="btn btn-sci" data-action="input" data-value="e">e</button>
+
+                    <button class="btn btn-sci" data-action="input" data-value="(">(</button>
+                    <button class="btn btn-sci" data-action="input" data-value=")">)</button>
+                    <button class="btn btn-sci" data-action="input" data-value="%">%</button>
+                    <button class="btn btn-sci" data-action="input" data-value="!">n!</button>
+                    <button class="btn btn-sci" data-action="func" data-value="1/">1/x</button>
+                </div>
+
+                <!-- Basic Operators & Numpad -->
+                <div class="basic-keys">
+                    <button class="btn btn-action btn-clear" id="clearBtn">AC</button>
+                    <button class="btn btn-action btn-del" id="delBtn"><i class="ri-delete-back-2-line"></i></button>
+                    <button class="btn btn-op" data-action="input" data-value="/">÷</button>
+                    <button class="btn btn-op" data-action="input" data-value="*">×</button>
+
+                    <button class="btn btn-num" data-action="input" data-value="7">7</button>
+                    <button class="btn btn-num" data-action="input" data-value="8">8</button>
+                    <button class="btn btn-num" data-action="input" data-value="9">9</button>
+                    <button class="btn btn-op" data-action="input" data-value="-">−</button>
+
+                    <button class="btn btn-num" data-action="input" data-value="4">4</button>
+                    <button class="btn btn-num" data-action="input" data-value="5">5</button>
+                    <button class="btn btn-num" data-action="input" data-value="6">6</button>
+                    <button class="btn btn-op" data-action="input" data-value="+">+</button>
+
+                    <button class="btn btn-num" data-action="input" data-value="1">1</button>
+                    <button class="btn btn-num" data-action="input" data-value="2">2</button>
+                    <button class="btn btn-num" data-action="input" data-value="3">3</button>
+                    <button class="btn btn-equal btn-tall" id="equalBtn">=</button>
+
+                    <button class="btn btn-num btn-wide" data-action="input" data-value="0">0</button>
+                    <button class="btn btn-num" data-action="input" data-value=".">.</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+@echo off
+echo Opening Portfolio in default browser...
+start "" "%~dp0index.html"
