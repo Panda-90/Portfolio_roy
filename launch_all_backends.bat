@@ -11,10 +11,11 @@ echo  [3] Launch Department Website           (Port 8001)
 echo  [4] Launch Contact Manager               (Port 8002)
 echo  [5] Launch Employee Management System   (Port 8003)
 echo  [6] Launch Weather AJAX Application     (Exp 09)
+echo  [7] Launch Book API Explorer            (Exp 10)
 echo  [0] Exit
 echo.
 echo =========================================================
-set /p choice="Enter your choice [0-6]: "
+set /p choice="Enter your choice [0-7]: "
 
 if "%choice%"=="1" goto launch_portfolio
 if "%choice%"=="2" goto launch_company
@@ -22,6 +23,7 @@ if "%choice%"=="3" goto launch_dept
 if "%choice%"=="4" goto launch_contact
 if "%choice%"=="5" goto launch_employee
 if "%choice%"=="6" goto launch_weather
+if "%choice%"=="7" goto launch_books
 if "%choice%"=="0" exit
 echo Invalid choice. Exiting...
 pause
@@ -49,5 +51,9 @@ exit
 
 :launch_weather
 start "" "%~dp0experiment-9-weather-ajax\index.html"
+exit
+
+:launch_books
+start "" "%~dp0experiment-10-book-api\index.html"
 exit
 

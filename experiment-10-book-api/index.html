@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 10: Book API Explorer (jQuery AJAX & JSON)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome for modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- jQuery Library (Required for $.ajax) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="glass-card">
+      
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="badge-row">
+          <span class="badge"><i class="fa-solid fa-flask"></i> Lab Experiment #10</span>
+          <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Portfolio Hub</a>
+        </div>
+        <h1>Book API Explorer</h1>
+        <p class="subtitle">Asynchronous Book Retrieval using jQuery <code>$.ajax()</code> & JSON Parsing</p>
+      </header>
+
+      <!-- Controls & Search Section -->
+      <section class="controls-section">
+        <div class="endpoint-banner">
+          <span class="endpoint-label"><i class="fa-solid fa-network-wired"></i> Endpoint:</span>
+          <code id="endpointUrl">https://openlibrary.org/search.json?q=programming&limit=12</code>
+        </div>
+
+        <div class="search-bar-row">
+          <div class="input-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input 
+              type="text" 
+              id="bookQuery" 
+              placeholder="Search by topic, title, or author (e.g. JavaScript, Python, Web)..."
+              value="programming"
+              autocomplete="off"
+            />
+            <button type="button" id="clearBtn" class="clear-btn" title="Clear search">&times;</button>
+          </div>
+          
+          <!-- Primary Action Button specified in lab prompt -->
+          <button type="button" id="loadBooksBtn" class="btn-load">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Load Books</span>
+          </button>
+        </div>
+
+        <!-- Quick Subject Chips -->
+        <div class="chips-row">
+          <span class="chips-label">Quick Topics:</span>
+          <button class="chip active" data-query="programming">Programming</button>
+          <button class="chip" data-query="javascript">JavaScript</button>
+          <button class="chip" data-query="python">Python</button>
+          <button class="chip" data-query="web development">Web Dev</button>
+          <button class="chip" data-query="artificial intelligence">AI & ML</button>
+          <button class="chip" data-query="data structures">Algorithms</button>
+        </div>
+      </section>
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-left">
+          <span class="status-indicator ready" id="statusIndicator"></span>
+          <span id="statusMessage">Click <strong>"Load Books"</strong> to trigger jQuery <code>$.ajax</code></span>
+        </div>
+        <div class="status-right" id="resultStats">
+          <!-- Filled dynamically by jQuery -->
+        </div>
+      </div>
+
+      <!-- Books Results Grid -->
+      <main class="books-display-area" id="booksDisplayArea">
+        <div class="empty-state">
+          <div class="empty-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+          <h3>No Books Loaded Yet</h3>
+          <p>Click the <strong>"Load Books"</strong> button above to send a jQuery <code>$.ajax()</code> GET request and dynamically parse book records.</p>
+        </div>
+      </main>
+
+      <!-- Technical Specifications Footer -->
+      <footer class="app-footer">
+        <div class="spec-pills">
+          <span class="pill"><i class="fa-brands fa-js"></i> Library: jQuery 3.7.1</span>
+          <span class="pill"><i class="fa-solid fa-code"></i> Method: $.ajax(GET)</span>
+          <span class="pill"><i class="fa-solid fa-file-code"></i> Format: JSON</span>
+          <span class="pill"><i class="fa-solid fa-bolt"></i> Async: Zero Page Reload</span>
+        </div>
+        <p class="copyright">&copy; 2026 Web Technology Lab — Pondicherry University</p>
+      </footer>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
